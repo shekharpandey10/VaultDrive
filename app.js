@@ -2,6 +2,7 @@ const express=require('express')
 const userRouter=require('./routes/user.route')
 const dotenv=require('dotenv')
 const connectToDB=require('./config/db')
+
 const app=express()
 dotenv.config()
 connectToDB()

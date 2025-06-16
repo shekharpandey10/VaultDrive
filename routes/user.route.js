@@ -1,6 +1,7 @@
 const express = require("express")
 const { body, validationResult } = require('express-validator');
 const router = express.Router()
+const userModel=require("../models/user.model")
 
 router.get('/', (req, res) => [
     res.render('register')
@@ -14,7 +15,7 @@ router.post('/register',
     body('email').trim().isEmail().isLength({ min: 13 }),
     body('password').trim().isLength({ min: 5 }),
     body('name').trim().isLength({ min: 3 }),
-    (req, res) => {
+    async (req, res) => {
 
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
@@ -23,7 +24,15 @@ router.post('/register',
                 message:'Invalid data'
             })
         }
-        res.send("user registered")
+
+        const {name,email,password}=req.body
+        const newUser= await userModel.create({
+            name,
+            email,
+            password
+        })
+       res.json(newUser)
+
     })
 
 

@@ -2,8 +2,9 @@ const express=require('express')
 const userRouter=require('./routes/user.route')
 const dotenv=require('dotenv')
 const connectToDB=require('./config/db')
-
+const cookieParser = require('cookie-parser');
 const app=express()
+app.use(cookieParser())
 dotenv.config()
 connectToDB()
 app.set('view engine','ejs')
